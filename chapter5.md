@@ -298,8 +298,8 @@ template<class T>
 }
 4)
 template<class T>
-	friend void fReverse(arrayList<T>& theList) { theList.reverse(); }
-//main() -> fReverse(a);
+	friend void reverse(arrayList<T>& theList) { theList.reverse(); }
+//main() -> reverse(a);
 ```
 ## <span id="23">23</span>
 ```C++
@@ -360,6 +360,16 @@ template<class T>
 	for (int i = newSize; i < listSize; ++i)
 		element[i].~T();
 	listSize = newSize;
+     
+     /*
+    	 T* temp = new T[arrayLength];
+		 for (int i = 0; i !=listSize / 2+1; ++i) {
+			 temp[i] = element[2*i];
+		 }
+		 delete []element;
+		 element = temp;
+		 listSize = listSize / 2;
+	*/
 }
 ```
 ## <span id="26">26</span>
@@ -404,7 +414,7 @@ int main()
 ## <span id="28">28</span>
 ```C++
 template<class T>
-void arrayList<T>::meld( arrayList<T>& a,  arrayList<T>& b)
+void arrayList<T>::meld(arrayList<T>& a, arrayList<T>& b)
 {
 	delete[] element;
 	listSize = a.size() + b.size();
@@ -422,7 +432,7 @@ void arrayList<T>::meld( arrayList<T>& a,  arrayList<T>& b)
 	arrayList<T>::iterator beg, end;
 	if (a.size() < b.size())
 	{
-		beg = b.begin() + minIndex;//注意 需重载iterator+  而不是++
+		beg = b.begin() + minIndex; //注意 需重载iterator+  而不是++
 		end = b.end();
 	}
 	else if (a.size() > b.size())
@@ -432,6 +442,39 @@ void arrayList<T>::meld( arrayList<T>& a,  arrayList<T>& b)
 	}
 	arrayList<T>::iterator to = begin() + 2 * minIndex;
 	std::copy(beg, end, to);
+
+	/*listSize = a.listSize + b.listSize;
+	if (a.listSize > b.listSize)
+	{
+		int i = b.listSize;
+		int j;
+		for (j = 0; j != i * 2; ++j) 
+		{
+			if (j % 2 == 0) 
+			{
+				element[j] = a[j / 2];
+			}
+			element[j] = b[j / 2];
+		}
+		copy(a.element + i, a.element + a.listSize, element + j);
+	}
+	else
+	{
+		int i = a.listSize;
+		int j;
+		for (j = 0; j != i * 2; ++j) 
+		{
+			if (j % 2 == 0) 
+			{
+				element[j] = a[j / 2];
+			}
+			else 
+			{
+				element[j] = b[j / 2];
+			}
+		}
+		copy(b.element + i, b.element + b.listSize, element + j);
+	}*/
 }
 //重载
 iterator& operator+(int index) { position+=index; return *this; }
